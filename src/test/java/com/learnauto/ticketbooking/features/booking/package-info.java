@@ -1,4 +1,3 @@
-
 @Narrative(
         title = "Search for definitions",
         text = {"In order to impress people",
@@ -6,6 +5,6 @@
                 "I want to be able to look up the meaning of unusual and impressive words"},
         cardNumber = "#123"
 )
-package com.learnauto.ticketbooking.features.search;
+package com.learnauto.ticketbooking.features.booking;
 
 import net.thucydides.core.annotations.Narrative;

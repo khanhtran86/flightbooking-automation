@@ -17,7 +17,8 @@ public class SearchFlight implements Task {
 	private static String tabName;
     private static String sourcePlace;
     private static String destinationPlace;
-
+    private static int bookingDay;
+    
     public static SearchFlight a(String tabName)
     {
     	SearchFlight.tabName = tabName;
@@ -32,9 +33,13 @@ public class SearchFlight implements Task {
     
     public static SearchFlight to(String toPlace)
     {
-    	Enter.theValue(toPlace).into(FlightBookingBox.FLIGHT_DESTINATION);
-    	
     	SearchFlight.destinationPlace = toPlace;
+    	return instrumented(SearchFlight.class);
+    }
+    
+    public static SearchFlight at(int day)
+    {
+    	SearchFlight.bookingDay = day;
     	return instrumented(SearchFlight.class);
     }
     
@@ -45,6 +50,7 @@ public class SearchFlight implements Task {
 				Click.on(FlightBookingBox.FLIGHT_TAB),
 				Enter.theValue(SearchFlight.sourcePlace).into(FlightBookingBox.FLIGHT_SOURCE),
 				Enter.theValue(SearchFlight.destinationPlace).into(FlightBookingBox.FLIGHT_DESTINATION),
+				//Click.on(FlightBookingBox.FLIGHT_DATE),
 				Click.on(FlightBookingBox.FLIGHT_SEARCH)
 		);
 	}

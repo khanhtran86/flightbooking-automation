@@ -1,4 +1,4 @@
-package com.learnauto.ticketbooking.features.search;
+package com.learnauto.ticketbooking.features.booking;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
@@ -23,24 +23,25 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 
 @RunWith(SerenityRunner.class)
-public class SearchByKeywordStory {
+public class WhenTrallverBookingATicketStory {
 
     Actor anna = Actor.named("Anna");
-
+    
     @Managed(uniqueSession = true)
     public WebDriver herBrowser;
-
-    @Steps
-    OpenTheApplication openTheApplication;
 
     @Before
     public void annaCanBrowseTheWeb() {
         anna.can(BrowseTheWeb.with(herBrowser));
+        herBrowser.manage().window().maximize();
+        
     }
-
+	
+    @Steps
+    OpenTheApplication openTheApplication;
+    
     @Test
-    public void switch_flight_booking_should_show_the_booking_form() {
-    //public void search_results_should_show_the_search_term_in_the_title() {
+    public void search_flight_should_show_the_available_flights() {
 
         givenThat(anna).wasAbleTo(openTheApplication);
 
