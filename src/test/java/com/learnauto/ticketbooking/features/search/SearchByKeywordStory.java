@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import com.learnauto.ticketbooking.tasks.OpenTheApplication;
+import com.learnauto.ticketbooking.tasks.SearchFlight;
 import com.learnauto.ticketbooking.ui.FlightBookingBox;
 import com.learnauto.ticketbooking.tasks.ChangeTab;
 
@@ -43,10 +44,10 @@ public class SearchByKeywordStory {
 
         givenThat(anna).wasAbleTo(openTheApplication);
 
-        when(anna).attemptsTo(ChangeTab.switchTheTab("flight"));
-
-        //should see the booking form
-        //then(anna).should();
+		when(anna).attemptsTo(
+        		SearchFlight.a("flight").from("Hà Nội (HAN)").to("TP HCM (SGN)")
+        );
+        
 
     }
 }

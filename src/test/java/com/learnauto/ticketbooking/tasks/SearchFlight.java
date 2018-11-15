@@ -14,19 +14,39 @@ import com.learnauto.ticketbooking.ui.FlightBookingBox;;
 
 public class SearchFlight implements Task {
 
-    private final String searchTerm;
+	private static String tabName;
+    private static String sourcePlace;
+    private static String destinationPlace;
 
-    protected SearchFlight(String searchTerm) {
-        this.searchTerm = searchTerm;
+    public static SearchFlight a(String tabName)
+    {
+    	SearchFlight.tabName = tabName;
+    	return instrumented(SearchFlight.class);
     }
     
-    public static SearchFlight forTheTerm(String searchTerm) {
-        return instrumented(SearchFlight.class, searchTerm);
+    public static SearchFlight from(String fromPlace)
+    {
+    	SearchFlight.sourcePlace = fromPlace;
+    	return instrumented(SearchFlight.class);
     }
+    
+    public static SearchFlight to(String toPlace)
+    {
+    	Enter.theValue(toPlace).into(FlightBookingBox.FLIGHT_DESTINATION);
+    	
+    	SearchFlight.destinationPlace = toPlace;
+    	return instrumented(SearchFlight.class);
+    }
+    
 	@Override
 	public <T extends Actor> void performAs(T actor) {
 		// TODO Auto-generated method stub
-		
+		actor.attemptsTo(
+				Click.on(FlightBookingBox.FLIGHT_TAB),
+				Enter.theValue(SearchFlight.sourcePlace).into(FlightBookingBox.FLIGHT_SOURCE),
+				Enter.theValue(SearchFlight.destinationPlace).into(FlightBookingBox.FLIGHT_DESTINATION),
+				Click.on(FlightBookingBox.FLIGHT_SEARCH)
+		);
 	}
 
 }
