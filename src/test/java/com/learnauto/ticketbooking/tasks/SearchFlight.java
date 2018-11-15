@@ -32,8 +32,6 @@ public class SearchFlight implements Task {
     
     public static SearchFlight to(String toPlace)
     {
-    	Enter.theValue(toPlace).into(FlightBookingBox.FLIGHT_DESTINATION);
-    	
     	SearchFlight.destinationPlace = toPlace;
     	return instrumented(SearchFlight.class);
     }
