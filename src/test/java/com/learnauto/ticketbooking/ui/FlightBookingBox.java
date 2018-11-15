@@ -10,5 +10,7 @@ public class FlightBookingBox {
     public static Target FLIGHT_DESTINATION = Target.the("flight destination").located(By.xpath("//input[@data-id=\"flightDestination\"]"));
     public static Target FLIGHT_ROUND_TRIP =  Target.the("flight round trip").located(By.xpath("//input[@data-id=\"flightRoundTrip\"]"));
     public static Target FLIGHT_DATE = Target.the("flight date").located(By.xpath("//input[@data-id=\"datepickerFlightSource\"]"));
+    public static Target FLIGHT_PASSENTER_INPUT = Target.the("flight input box").located(By.cssSelector(".tvat-passengers"));
+    public static Target FLIGHT_PASSENGER = Target.the("flight passenger").located(By.xpath("//input[@data-id=\"flightPassengersAdult\"]"));
     public static Target FLIGHT_SEARCH = Target.the("search flight").located(By.xpath("//button[@data-id=\"searchFlightSubmit\"]"));
 }

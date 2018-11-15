@@ -18,6 +18,7 @@ public class SearchFlight implements Task {
     private static String sourcePlace;
     private static String destinationPlace;
     private static int bookingDay;
+    private static String bookingPassenger;
     
     public static SearchFlight a(String tabName)
     {
@@ -43,6 +44,12 @@ public class SearchFlight implements Task {
     	return instrumented(SearchFlight.class);
     }
     
+    public static SearchFlight forPassenger(int passenger)
+    {
+    	SearchFlight.bookingPassenger= Integer.toString(passenger);
+    	return instrumented(SearchFlight.class);
+    }
+    
 	@Override
 	public <T extends Actor> void performAs(T actor) {
 		// TODO Auto-generated method stub
@@ -50,7 +57,8 @@ public class SearchFlight implements Task {
 				Click.on(FlightBookingBox.FLIGHT_TAB),
 				Enter.theValue(SearchFlight.sourcePlace).into(FlightBookingBox.FLIGHT_SOURCE),
 				Enter.theValue(SearchFlight.destinationPlace).into(FlightBookingBox.FLIGHT_DESTINATION),
-				//Click.on(FlightBookingBox.FLIGHT_DATE),
+				Click.on(FlightBookingBox.FLIGHT_PASSENTER_INPUT),
+				Enter.theValue(SearchFlight.bookingPassenger).into(FlightBookingBox.FLIGHT_PASSENGER),
 				Click.on(FlightBookingBox.FLIGHT_SEARCH)
 		);
 	}

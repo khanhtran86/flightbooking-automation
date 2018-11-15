@@ -46,7 +46,7 @@ public class WhenTrallverBookingATicketStory {
         givenThat(anna).wasAbleTo(openTheApplication);
 
 		when(anna).attemptsTo(
-        		SearchFlight.a("flight").from("Hà Nội (HAN)").to("TP HCM (SGN)")
+        		SearchFlight.a("flight").from("Hà Nội (HAN)").to("TP HCM (SGN)").at(16).forPassenger(3)
         );
         
 
