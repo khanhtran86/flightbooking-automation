@@ -1,54 +1,63 @@
 package com.learnauto.ticketbooking.features.booking;
 
-import net.serenitybdd.junit.runners.SerenityRunner;
-import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.questions.page.TheWebPage;
-import net.thucydides.core.annotations.Issue;
-import net.thucydides.core.annotations.Managed;
-import net.thucydides.core.annotations.Steps;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
+import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
+import java.net.MalformedURLException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
+
+import com.learnauto.ticketbooking.question.TheOutboundJourneySummary;
 import com.learnauto.ticketbooking.tasks.OpenTheApplication;
-import com.learnauto.ticketbooking.tasks.SearchFlight;
-import com.learnauto.ticketbooking.ui.FlightBookingBox;
-import com.learnauto.ticketbooking.tasks.ChangeTab;
+import com.learnauto.ticketbooking.tasks.SearchTheAvailableTickets;
 
-
-import static net.serenitybdd.screenplay.GivenWhenThen.*;
-import static net.serenitybdd.screenplay.EventualConsequence.eventually;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasItem;
+import net.serenitybdd.junit.runners.SerenityRunner;
+import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import net.serenitybdd.screenplay.actors.OnStage;
+import net.serenitybdd.screenplay.actors.OnlineCast;
+import net.thucydides.core.annotations.Managed;
+import net.thucydides.core.annotations.Steps;
 
 @RunWith(SerenityRunner.class)
 public class WhenTrallverBookingATicketStory {
 
-    Actor anna = Actor.named("Anna");
-    
-    @Managed(uniqueSession = true)
-    public WebDriver herBrowser;
+	@Managed(uniqueSession = true)
+	public WebDriver hisBrowser;
 
-    @Before
-    public void annaCanBrowseTheWeb() {
-        anna.can(BrowseTheWeb.with(herBrowser));
-        herBrowser.manage().window().maximize();
-        
-    }
-	
-    @Steps
-    OpenTheApplication openTheApplication;
-    
-    @Test
-    public void search_flight_should_show_the_available_flights() {
+	String jacob = "Jacob";
 
-        givenThat(anna).wasAbleTo(openTheApplication);
+	@Steps
+	OpenTheApplication openTheApplication;
 
-		when(anna).attemptsTo(
-        		SearchFlight.a("flight").from("Hà Nội (HAN)").to("TP HCM (SGN)").at(16).forPassenger(3)
-        );
-        
+	@Before
+	public void annaCanBrowseTheMobileApp() throws MalformedURLException {
+		OnStage.setTheStage(new OnlineCast());
+		
+		// Given
+		theActorCalled(jacob).can(BrowseTheWeb.with(hisBrowser));
+		theActorInTheSpotlight().attemptsTo(openTheApplication);
+	}
 
-    }
+	@Test
+	public void search_flight_should_show_the_available_flights() {
+
+		String departure = "Hà Nội (HAN)";
+		String destination = "TP HCM (SGN)";
+
+		// When
+		theActorInTheSpotlight().attemptsTo(SearchTheAvailableTickets.from(departure).to(destination));
+		
+		// Then
+		theActorInTheSpotlight().should(
+				seeThat("the departure station", TheOutboundJourneySummary.origin(), is(equalTo(departure))),
+				seeThat("the destination station", TheOutboundJourneySummary.destination(), is(equalTo(destination))));
+
+	}
+
 }
